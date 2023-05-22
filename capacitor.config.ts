@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'vue.project',
-  appName: 'vue-project',
+  appId: 'io.ionic.starter',
+  appName: 'AppCartillas',
   webDir: 'dist',
   server: {
     androidScheme: 'https'
