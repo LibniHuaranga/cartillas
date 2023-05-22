@@ -22,8 +22,12 @@
     "@capacitor/ios": "5.0.3",
     "@capacitor/keyboard": "5.0.2",
     "@capacitor/status-bar": "5.0.2",
+    "@ionic/vue-router": "^7.0.7",
+    "axios": "^1.4.0",
     "pinia": "^2.0.36",
-    "vue": "^3.3.2"
+    "sass": "^1.62.1",
+    "vue": "^3.3.2",
+    "vue-router": "^4.2.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
