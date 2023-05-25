@@ -2,7 +2,10 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Crear Cartilla</ion-title>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/ruta-personalizada"></ion-back-button>
+        </ion-buttons>
+        <ion-title style="color: orange;">Crear Cartilla</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
@@ -49,7 +52,8 @@
             <ion-input v-model="fecha" type="date"></ion-input>
           </ion-item>
         </ion-list>
-        <ion-button expand="full" type="submit">Crear cartilla</ion-button>
+        <ion-button expand="full" @click="goToOtraPagina" type="submit" style="color: orange;" color="orange">Crear cartilla</ion-button>
+       
       </form>
     </ion-content>
   </ion-page>
@@ -59,6 +63,7 @@
 import { IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar, IonButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { useAuthStore } from "../Store/authStore";
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'CrearCartilla',
@@ -77,8 +82,14 @@ export default defineComponent({
     IonToolbar,
     IonButton,
   },
-  data() {
-    return {
+  setup() {
+    const router = useRouter();
+
+    const goToOtraPagina = () => {
+      router.push('/homecartillas');
+    };
+
+    const data = {
       unidades: [],
       minas: [],
       lugares: [],
@@ -91,77 +102,89 @@ export default defineComponent({
       fecha: '',
       token: null,
     };
-  },
-  mounted() {
-    const authStore = useAuthStore();
-    this.token = authStore.token;
 
-    // Realizar solicitudes GET para obtener los datos
-    this.fetchUnidades();
-    this.fetchMinas();
-    this.fetchEspecialidades();
-  },
-  methods: {
-    fetchUnidades() {
+    const mounted = () => {
+      const authStore = useAuthStore();
+      data.token = authStore.token;
+
+      // Realizar solicitudes GET para obtener los datos
+      fetchUnidades();
+      fetchMinas();
+      fetchEspecialidades();
+    };
+
+    const fetchUnidades = () => {
       fetch('http://localhost:8080/api/v1/company-worker', {
         mode: 'no-cors',
         headers: {
-          Authorization: this.token,
+          Authorization: data.token,
         },
       })
         .then(response => response.json())
         .then(data => {
-          this.unidades = data;
+          data.unidades = data;
         })
         .catch(error => {
-          console.log(this.token);
+          console.log(data.token);
           console.error('Error al obtener los datos de las unidades:', error);
         });
-    },
-    fetchMinas() {
+    };
+
+    const fetchMinas = () => {
       fetch('http://localhost:8080/api/v1/place', {
         mode: 'no-cors',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${data.token}`,
         },
       })
         .then(response => response.json())
         .then(data => {
-          this.minas = data.map(item => item.area);
+          data.minas = data.map(item => item.area);
         })
         .catch(error => {
           console.error('Error al obtener los datos de las minas:', error);
         });
-    },
-    fetchEspecialidades() {
+    };
+
+    const fetchEspecialidades = () => {
       fetch('http://localhost:8080/api/v1/specialty', {
         mode: 'no-cors',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${data.token}`,
         },
       })
         .then(response => response.json())
         .then(data => {
-          this.especialidades = data;
+          data.especialidades = data;
         })
         .catch(error => {
           console.error('Error al obtener los datos de las especialidades:', error);
         });
-    },
-    submitForm() {
+    };
+
+    const submitForm = () => {
       console.log('Formulario enviado');
-      console.log('Unidad seleccionada:', this.unidadSeleccionada);
-      console.log('Mina:', this.mina);
-      console.log('Lugar:', this.lugar);
-      console.log('Especialidad:', this.especialidad);
-      console.log('Actividad observada:', this.actividadObservada);
-      console.log('Fecha:', this.fecha);
-      console.log('Token:', this.token);
-    },
+      console.log('Unidad seleccionada:', data.unidadSeleccionada);
+      console.log('Mina:', data.mina);
+      console.log('Lugar:', data.lugar);
+      console.log('Especialidad:', data.especialidad);
+      console.log('Actividad observada:', data.actividadObservada);
+      console.log('Fecha:', data.fecha);
+      console.log('Token:', data.token);
+    };
+
+    return {
+      data,
+      goToOtraPagina,
+      mounted,
+      fetchUnidades,
+      fetchMinas,
+      fetchEspecialidades,
+      submitForm,
+    };
   },
 });
 </script>
-
 
 <style scoped>
 
