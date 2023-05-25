@@ -115,19 +115,21 @@ export default defineComponent({
       };
       const options = {
         url: "http://192.168.0.10:8080/api/v1/auth/authenticate",
-        headers: { "Content-Type": "application/json" },
-        data: JSON.stringify(credentials),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: credentials,
       };
       try {
         const response = await CapacitorHttp.post(options);
+        console.log(response);
+
         if (response.data.access_token) {
           authStore.setToken(response.data.access_token);
           router.push({ name: "Search" });
           await Toast.show({
             text: "Logged",
           });
-        } else {
-          throw new Error("Usuario o contraseña incorrectos");
         }
       } catch (error) {
         console.log(error);

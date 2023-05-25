@@ -32,6 +32,7 @@ import {
 import { defineComponent, ref, onMounted } from "vue";
 import { useAuthStore } from "../Store/authStore";
 import { CapacitorHttp } from "@capacitor/core";
+import api from "../boot/axios";
 
 export default defineComponent({
   name: "CrearCartilla",
@@ -68,15 +69,14 @@ export default defineComponent({
 
       try {
         const options = {
-          url: "http://192.168.0.10:8080/api/v1/place",
+          url: "http://192.168.0.10:8080/api/v1/place/placesList",
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTY4NDk5NDA2NSwiZXhwIjoxNjg1MDgwNDY1fQ.raFkUWNv-wO2mtGqM6VF6a-cnhnYIH_MxrkuYItc4gc`,
             "Content-Type": "application/json",
-            "Cache-Control": "no-cache",
+            Authorization: `Bearer ${token.value}`,
           },
         };
         const response = await CapacitorHttp.get(options);
-        console.log(response.data, "TTTTTTTTT");
+        console.log(response.data);
       } catch (error) {
         console.error("Error al obtener los datos de las unidades:", error);
       }

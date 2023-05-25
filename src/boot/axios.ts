@@ -13,7 +13,7 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`; // Agrega el token al encabezado de autorización
   }
-
+  config.headers["Content-Type"] = "application/json";
   return config;
 });
 

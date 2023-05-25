@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { createPersistedState } from "pinia-plugin-persistedstate";
 
 interface AuthState {
   token: string | null;
@@ -18,6 +19,7 @@ export const useAuthStore = defineStore({
     token: null,
     user: null,
   }),
+  persist: true,
   getters: {
     isAuthenticated: (state) => !!state.token,
   },
