@@ -48,7 +48,13 @@
             <ion-menu-button class="test" color="primary"></ion-menu-button>
           </ion-buttons>
           <ion-buttons slot="end">
-            <ion-button class="add-cartilla-button" fill="solid" shape="round" color="warning" @click="goToCartillas">
+            <ion-button
+              class="add-cartilla-button"
+              fill="solid"
+              shape="round"
+              color="warning"
+              @click="goToCartillas"
+            >
               Agregar Cartilla
             </ion-button>
           </ion-buttons>
@@ -62,9 +68,9 @@
 </template>
 
 <script setup lang="ts">
-
 import {
   IonButtons,
+  IonButton,
   IonContent,
   IonHeader,
   IonMenu,
@@ -80,7 +86,6 @@ import PrimerSearch from "./PrimerSearch.vue";
 import router from "@/router";
 import { Toast } from "@capacitor/toast";
 
-
 const goToCartillas = () => {
   router.push({ name: "FormCartilla" });
 };
@@ -90,12 +95,11 @@ const beforeLeave = (to: any, from: any, next: () => void) => {
   // Realiza aquí las acciones de limpieza o reinicio necesarias
   Toast.show({
     text: "Ingresa datos a la cartilla",
-    duration: "short"
+    duration: "short",
   }).then(() => {
     next();
   });
 };
-
 </script>
 
 <style scoped lang="scss">
