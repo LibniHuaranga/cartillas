@@ -75,7 +75,8 @@ import { defineComponent, ref } from "vue";
 import { useAuthStore } from "../Store/authStore";
 import { useRouter } from "vue-router";
 import { Toast } from "@capacitor/toast";
-
+import { CapacitorHttp } from "@capacitor/core";
+import api from "../boot/axios";
 import {
   IonItem,
   IonGrid,
@@ -108,31 +109,29 @@ export default defineComponent({
     const textColor = ref("#ffa500");
 
     const login = async () => {
-    const credentials = {
-    email: username.value,
-    password: password.value,
-     };
-    const requestOptions = {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify(credentials),
-     };
-
-     try {
-       const response = await fetch('http://localhost:8080/api/v1/auth/authenticate', requestOptions);
-         if (response.ok) {
-            const data = await response.json();
-             authStore.setToken(data.access_token);
-              router.push({ name: 'Search' });
-               await Toast.show({
-                text: 'Logged',
+      const credentials = {
+        email: username.value,
+        password: password.value,
+      };
+      const options = {
+        url: "http://192.168.0.10:8080/api/v1/auth/authenticate",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify(credentials),
+      };
+      try {
+        const response = await CapacitorHttp.post(options);
+        if (response.data.access_token) {
+          authStore.setToken(response.data.access_token);
+          router.push({ name: "Search" });
+          await Toast.show({
+            text: "Logged",
           });
         } else {
-           throw new Error('Usuario o contraseña incorrectos');
+          throw new Error("Usuario o contraseña incorrectos");
         }
-     } catch (error) {
-      console.log(error);
-     }
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const goBack = () => {
