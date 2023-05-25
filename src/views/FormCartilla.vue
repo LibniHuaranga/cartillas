@@ -1,150 +1,177 @@
 <template>
-  <div class="content" :style="{ backgroundColor: backgroundColor, color: textColor }">
-    <div class="login-bg">
-      <ion-grid>
-        <ion-row class="ion-justify-content-center">
-          <ion-col class="card" size="12" size-sm="10">
-            <form @submit.prevent="login" class="form">
-              <ion-row class="ion-margin-bottom">
-                <ion-col size="12" class="ion-margin-bottom">
-                  <h1 class="title ion-text-center custom-color" style="color: orange">Formulario de Cartilla</h1>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-margin-bottom">
-                <ion-col size="12">
-                  <ion-item class="ion-margin-bottom ion-align-self-center">
-                    <ion-label>Unidad Seleccionada</ion-label>
-                    <ion-select v-model="unidad" placeholder="Seleccione una unidad" :searchable="true">
-                      <ion-select-option v-for="unit in unidades" :value="unit.id" :key="unit.id">{{ unit.name }}</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-margin-bottom">
-                <ion-col size="12">
-                  <ion-item class="ion-margin-bottom ion-align-self-center">
-                    <ion-label>Mina</ion-label>
-                    <ion-select v-model="mina" placeholder="Seleccione una mina" :searchable="true">
-                      <ion-select-option v-for="mine in minas" :value="mine.id" :key="mine.id">{{ mine.name }}</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-margin-bottom">
-                <ion-col size="12">
-                  <ion-item class="ion-margin-bottom ion-align-self-center">
-                    <ion-label>Lugar</ion-label>
-                    <ion-select v-model="lugar" placeholder="Seleccione un lugar" :searchable="true">
-                      <ion-select-option v-for="place in lugares" :value="place.id" :key="place.id">{{ place.name }}</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-margin-bottom">
-                <ion-col size="12">
-                  <ion-item class="ion-margin-bottom ion-align-self-center">
-                    <ion-label>Especialidad</ion-label>
-                    <ion-select v-model="especialidad" placeholder="Seleccione una especialidad" :searchable="true">
-                      <ion-select-option v-for="specialty in especialidades" :value="specialty.id" :key="specialty.id">{{ specialty.name }}</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-margin-bottom">
-                <ion-col size="12">
-                  <ion-item class="ion-margin-bottom ion-align-self-center">
-                    <ion-label>Actividad Observada</ion-label>
-                    <ion-input v-model="actividad" placeholder="Escriba la actividad observada"></ion-input>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-margin-top">
-                <ion-col size="12" class="ion-margin-bottom">
-                  <ion-item class="">
-                    <ion-label>Fecha</ion-label>
-                    <ion-input v-model="fecha" type="date"></ion-input>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-row class="ion-margin-bottom ion-justify-content-center">
-                    <ion-col size="6" class="login-button-container">
-                      <ion-button fill="solid" shape="round" color="primary" size="default" class="login-button ion-text-capitalize ion-no-margin" type="submit">
-                        Crear Cartilla
-                      </ion-button>
-                    </ion-col>
-                  </ion-row>
-                </ion-col>
-              </ion-row>
-            </form>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </div>
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Crear Cartilla</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <form @submit="submitForm">
+        <ion-list>
+          <ion-item>
+            <ion-label>Unidad seleccionada</ion-label>
+            <ion-select v-model="unidadSeleccionada">
+              <ion-select-option v-for="unidad in unidades" :key="unidad.id" :value="unidad.id">
+                {{ unidad.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Mina</ion-label>
+            <ion-select v-model="mina">
+              <ion-select-option v-for="m in minas" :key="m.id" :value="m.id">
+                {{ m.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Lugar</ion-label>
+            <ion-select v-model="lugar">
+              <ion-select-option v-for="l in lugares" :key="l.id" :value="l.id">
+                {{ l.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Especialidad</ion-label>
+            <ion-select v-model="especialidad">
+              <ion-select-option v-for="e in especialidades" :key="e.id" :value="e.id">
+                {{ e.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Actividad observada</ion-label>
+            <ion-input v-model="actividadObservada" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Fecha</ion-label>
+            <ion-input v-model="fecha" type="date"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-button expand="full" type="submit">Crear cartilla</ion-button>
+      </form>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script>
-import axios from 'axios';
+import { IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar, IonButton } from '@ionic/vue';
+import { defineComponent } from 'vue';
+import { useAuthStore } from "../Store/authStore";
 
-export default {
+export default defineComponent({
+  name: 'CrearCartilla',
+  components: {
+    IonContent,
+    IonDatetime,
+    IonHeader,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonPage,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToolbar,
+    IonButton,
+  },
   data() {
     return {
       unidades: [],
       minas: [],
       lugares: [],
       especialidades: [],
-      unidad: null,
-      mina: null,
-      lugar: null,
-      especialidad: null,
-      actividad: '',
+      unidadSeleccionada: '',
+      mina: '',
+      lugar: '',
+      especialidad: '',
+      actividadObservada: '',
       fecha: '',
-      // Resto de tus datos del formulario
+      token: null,
     };
   },
-  methods: {
-    async loadData() {
-      try {
-        const promises = [
-          axios.get('http://localhost:8080/api/v1/company-worker'),
-          axios.get('http://localhost:8080/api/v1/place'),
-          axios.get('http://localhost:8080/api/v1/specialty')
-        ];
-
-        const responses = await Promise.all(promises);
-
-        this.minas = responses[1].data;
-        this.lugares = responses[2].data;
-        this.especialidades = responses[3].data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    // Resto de tus métodos del componente
-    async login() {
-      // Llamar a la función loadData antes de enviar el formulario
-      await this.loadData();
-
-      // Resto de tu lógica de login
-    },
-  },
   mounted() {
-    // Llamar a la función loadData cuando el componente se monte
-    this.loadData();
+    const authStore = useAuthStore();
+    this.token = authStore.token;
+
+    // Realizar solicitudes GET para obtener los datos
+    this.fetchUnidades();
+    this.fetchMinas();
+    this.fetchEspecialidades();
   },
-};
+  methods: {
+    fetchUnidades() {
+      fetch('http://localhost:8080/api/v1/company-worker', {
+        mode: 'no-cors',
+        headers: {
+          Authorization: this.token,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.unidades = data;
+        })
+        .catch(error => {
+          console.log(this.token);
+          console.error('Error al obtener los datos de las unidades:', error);
+        });
+    },
+    fetchMinas() {
+      fetch('http://localhost:8080/api/v1/place', {
+        mode: 'no-cors',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.minas = data.map(item => item.area);
+        })
+        .catch(error => {
+          console.error('Error al obtener los datos de las minas:', error);
+        });
+    },
+    fetchEspecialidades() {
+      fetch('http://localhost:8080/api/v1/specialty', {
+        mode: 'no-cors',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.especialidades = data;
+        })
+        .catch(error => {
+          console.error('Error al obtener los datos de las especialidades:', error);
+        });
+    },
+    submitForm() {
+      console.log('Formulario enviado');
+      console.log('Unidad seleccionada:', this.unidadSeleccionada);
+      console.log('Mina:', this.mina);
+      console.log('Lugar:', this.lugar);
+      console.log('Especialidad:', this.especialidad);
+      console.log('Actividad observada:', this.actividadObservada);
+      console.log('Fecha:', this.fecha);
+      console.log('Token:', this.token);
+    },
+  },
+});
 </script>
+
+
 <style scoped>
-/* Estilos CSS existentes */
+
 
 .content {
   --background: #000000 !important;
   --color: #000000 !important;
 }
 
-/* Estilos CSS existentes */
+
 
 .rounded-input {
   border-radius: 1px;
@@ -169,6 +196,5 @@ export default {
   color: orange;
 }
 
-/* Estilos CSS existentes */
 
 </style>

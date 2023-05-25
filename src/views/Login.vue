@@ -72,11 +72,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import api from "../boot/axios.js";
 import { useAuthStore } from "../Store/authStore";
 import { useRouter } from "vue-router";
 import { Toast } from "@capacitor/toast";
-import { toastController } from "@ionic/vue";
 
 import {
   IonItem,
@@ -87,6 +85,7 @@ import {
   IonPage,
   IonButton,
 } from "@ionic/vue";
+
 export default defineComponent({
   name: "Login",
   components: {
@@ -109,30 +108,33 @@ export default defineComponent({
     const textColor = ref("#ffa500");
 
     const login = async () => {
-      const credentials = {
-        email: username.value,
-        password: password.value,
-      };
-      try {
-        const response = await api.post("/auth/authenticate", credentials);
-        authStore.setToken(response.data.access_token);
-        router.push({ name: "Search" });
-        await Toast.show({
-          text: "Logged",
-        });
-      } catch (error) {
-        const test = error.message;
-        await showToast(test);
-        console.log(error);
-      }
+    const credentials = {
+    email: username.value,
+    password: password.value,
+     };
+    const requestOptions = {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify(credentials),
+     };
+
+     try {
+       const response = await fetch('http://localhost:8080/api/v1/auth/authenticate', requestOptions);
+         if (response.ok) {
+            const data = await response.json();
+             authStore.setToken(data.access_token);
+              router.push({ name: 'Search' });
+               await Toast.show({
+                text: 'Logged',
+          });
+        } else {
+           throw new Error('Usuario o contraseña incorrectos');
+        }
+     } catch (error) {
+      console.log(error);
+     }
     };
-    const showToast = async (text: string) => {
-      const toast = await toastController.create({
-        message: text,
-        duration: 2000,
-      });
-      await toast.present();
-    };
+
     const goBack = () => {
       router.go(-1);
     };

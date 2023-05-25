@@ -24,8 +24,8 @@
           style="width: 60%"
         />
       </ion-header>
-      <ion-content class="primer-body-menu"
-        ><ul>
+      <ion-content class="primer-body-menu">
+        <ul>
           <li>
             <ion-icon slot="start" :icon="personSharp"></ion-icon>
             <div>PERFIL</div>
@@ -47,14 +47,22 @@
           <ion-buttons slot="start">
             <ion-menu-button class="test" color="primary"></ion-menu-button>
           </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button class="add-cartilla-button" fill="solid" shape="round" color="warning" @click="goToCartillas">
+              Agregar Cartilla
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding"> <primer-search /> </ion-content>
+      <ion-content class="ion-padding">
+        <primer-search />
+      </ion-content>
     </ion-page>
   </div>
 </template>
 
 <script setup lang="ts">
+
 import {
   IonButtons,
   IonContent,
@@ -69,6 +77,25 @@ import {
 } from "@ionic/vue";
 import { personSharp, cogSharp, logOutSharp } from "ionicons/icons";
 import PrimerSearch from "./PrimerSearch.vue";
+import router from "@/router";
+import { Toast } from "@capacitor/toast";
+
+
+const goToCartillas = () => {
+  router.push({ name: "FormCartilla" });
+};
+
+// Limpiar o reiniciar el estado del componente antes de salir de la página actual
+const beforeLeave = (to: any, from: any, next: () => void) => {
+  // Realiza aquí las acciones de limpieza o reinicio necesarias
+  Toast.show({
+    text: "Ingresa datos a la cartilla",
+    duration: "short"
+  }).then(() => {
+    next();
+  });
+};
+
 </script>
 
 <style scoped lang="scss">

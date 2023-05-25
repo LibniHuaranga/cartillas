@@ -47,39 +47,37 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      dni: '',
-      showWarning: false
-    };
-  },
-  methods: {
-    recoverPassword() {
-      // Verificar si el DNI es válido
-      if (this.isValidDNI(this.dni)) {
-        // Aquí puedes agregar la lógica para recuperar la contraseña
-        // utilizando el valor de this.dni
-        console.log('Recuperar contraseña para DNI:', this.dni);
-        // Redireccionar a la página de éxito de recuperación de contraseña
-        this.$router.push('/password-recovery-success');
-      } else {
-        this.showWarning = true;
-      }
-    },
-    goBack() {
-      this.$router.go(-1);
-    },
-    isValidDNI(dni) {
-      // Verificar si el DNI es válido
-      // Puedes implementar tu lógica de validación de DNI aquí
-      // Devuelve true si es válido, de lo contrario devuelve false
-      // Ejemplo de validación de DNI en Argentina (solo como referencia)
-      return /^\d{7,8}$/.test(dni);
-    }
+<script setup lang="ts">
+import router from '@/router';
+import { ref } from 'vue';
+
+const dni = ref('');
+const showWarning = ref(false);
+
+function recoverPassword() {
+  // Verificar si el DNI es válido
+  if (isValidDNI(dni.value)) {
+    // Aquí puedes agregar la lógica para recuperar la contraseña
+    // utilizando el valor de dni.value
+    console.log('Recuperar contraseña para DNI:', dni.value);
+    // Redireccionar a la página de éxito de recuperación de contraseña
+    router.push('/password-recovery-success');
+  } else {
+    showWarning.value = true;
   }
-};
+}
+
+function goBack() {
+  router.go(-1);
+}
+
+function isValidDNI(dni: string): boolean {
+  // Verificar si el DNI es válido
+  // Puedes implementar tu lógica de validación de DNI aquí
+  // Devuelve true si es válido, de lo contrario devuelve false
+  // Ejemplo de validación de DNI en Argentina (solo como referencia)
+  return /^\d{7,8}$/.test(dni);
+}
 </script>
 <style lang="scss" scoped>
 .content {
