@@ -11,47 +11,55 @@ import HomePage from "../views/HomePage.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: { name: "Login" },
+    component: Login,
   },
   {
     path: "/contrasena",
     name: "Contrasena",
     component: Contrasena,
-  }, 
+    meta: { noCache: true },
+  },
   {
     path: "/login",
     name: "Login",
     component: Login,
+    meta: { noCache: true },
   },
   {
     path: "/search",
     name: "Search",
     component: HomePage,
+    meta: { noCache: true },
   },
- {
+  {
     path: "/formcartilla",
     name: "FormCartilla",
     component: FormCartilla,
-  }, 
+    meta: { noCache: true },
+  },
   {
     path: "/homecartillas",
     name: "Homecartillas",
     component: HomeCartilla,
+    meta: { noCache: true },
   },
   {
     path: "/condiciones",
     name: "Condiciones",
     component: Condiciones,
+    meta: { noCache: true },
   },
   {
     path: "/actos",
     name: "Actos",
     component: Actos,
+    meta: { noCache: true },
   },
   {
     path: "/recursos",
     name: "Recursos",
     component: Recursos,
+    meta: { noCache: true },
   },
 ];
 

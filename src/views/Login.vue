@@ -76,7 +76,6 @@ import { useAuthStore } from "../Store/authStore";
 import { useRouter } from "vue-router";
 import { Toast } from "@capacitor/toast";
 import { CapacitorHttp } from "@capacitor/core";
-import api from "../boot/axios";
 import {
   IonItem,
   IonGrid,
@@ -126,7 +125,7 @@ export default defineComponent({
 
         if (response.data.access_token) {
           authStore.setToken(response.data.access_token);
-          router.push({ name: "Search" });
+          router.replace({ name: "Search" });
           await Toast.show({
             text: "Logged",
           });

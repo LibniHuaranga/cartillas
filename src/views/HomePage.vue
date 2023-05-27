@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ion-page id="main-content">
     <ion-menu content-id="main-content" class="menu-primer">
       <ion-header class="primer-header">
         <div class="user-information">
@@ -41,30 +41,28 @@
         </ul>
       </ion-content>
     </ion-menu>
-    <ion-page id="main-content">
-      <ion-header>
-        <ion-toolbar :mode="'md'">
-          <ion-buttons slot="start">
-            <ion-menu-button class="test" color="primary"></ion-menu-button>
-          </ion-buttons>
-          <ion-buttons slot="end">
-            <ion-button
-              class="add-cartilla-button"
-              fill="solid"
-              shape="round"
-              color="warning"
-              @click="goToCartillas"
-            >
-              Agregar Cartilla
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <primer-search />
-      </ion-content>
-    </ion-page>
-  </div>
+    <ion-header>
+      <ion-toolbar :mode="'md'">
+        <ion-buttons slot="start">
+          <ion-menu-button class="test" color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button
+            class="add-cartilla-button"
+            fill="solid"
+            shape="round"
+            color="primary"
+            @click="goToCartillas"
+          >
+            Nueva Cartilla
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <primer-search />
+    </ion-content>
+  </ion-page>
 </template>
 
 <script setup lang="ts">
@@ -77,7 +75,7 @@ import {
   IonMenuButton,
   IonPage,
   IonAvatar,
-  IonTitle,
+  IonBackButton,
   IonToolbar,
   IonIcon,
 } from "@ionic/vue";
@@ -103,6 +101,11 @@ const beforeLeave = (to: any, from: any, next: () => void) => {
 </script>
 
 <style scoped lang="scss">
+ion-button {
+  --background: #f1b204 !important;
+  --ion-color-contrast: black !important;
+  font-size: 12px !important;
+}
 .header-md::after {
   background-image: none;
 }
@@ -161,7 +164,7 @@ const beforeLeave = (to: any, from: any, next: () => void) => {
   }
 }
 ion-toolbar {
-  --ion-color-primary: #f1b204;
+  --ion-color-primary: white;
 
   --background: transparent;
   --color: black;

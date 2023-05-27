@@ -13,7 +13,7 @@ http://ionicframework.com/docs/theming/ */
   /** primary **/
   --ion-color-primary: #f1b204;
   --ion-color-primary-rgb: 241, 178, 4;
-  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast: black;
   --ion-color-primary-contrast-rgb: 0, 0, 0;
   --ion-color-primary-shade: #d49d04;
   --ion-color-primary-tint: #f2ba1d;
