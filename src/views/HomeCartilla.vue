@@ -1,12 +1,7 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title class="cartilla-title">Informacion de la cartilla</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    
-    <ion-content>
+    <HeaderLayout />
+    <ion-content class="ion-padding form-primer">
       <ion-grid class="container">
         <ion-row class="top-section">
           <ion-col>
@@ -14,9 +9,24 @@
           </ion-col>
         </ion-row>
         <ion-row class="bottom-section">
-          <ion-col size="12" size-md="4" v-for="(button, index) in buttons" :key="index">
-            <ion-button expand="block" @click="buttonClicked(index)">
-              <ion-label>{{ button.text }}</ion-label>
+          <ion-col size="12">
+            <ion-button expand="block" @click="buttonClicked(0)">
+              <ion-label>Condiciones</ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button expand="block" @click="buttonClicked(1)">
+              <ion-label>Actos</ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button expand="block" @click="buttonClicked(2)">
+              <ion-label>Recursos</ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button expand="block" @click="buttonClicked(3)">
+              <ion-label>Guardar</ion-label>
             </ion-button>
           </ion-col>
         </ion-row>
@@ -25,35 +35,44 @@
   </ion-page>
 </template>
 
-<script setup lang="ts">
-import { defineProps } from 'vue';
-import { useRouter } from 'vue-router';
-const props = defineProps({
-  name: String
+<script lang="ts">
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonButton,
+  IonCol,
+} from "@ionic/vue";
+import { defineComponent } from "vue";
+import HeaderLayout from "../views/HeaderLayout.vue";
+import router from "@/router";
+
+export default defineComponent({
+  name: "CrearCartilla",
+  components: {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonButton,
+    IonCol,
+    HeaderLayout,
+  },
+  setup() {
+    const buttonClicked = (index: number) => {
+      if (index === 0) {
+        router.push({ path: "/condiciones" });
+      } else if (index === 1) {
+        router.push({ path: "/actos" });
+      } else if (index === 2) {
+        router.push({ path: "/recursos" });
+      }
+    };
+
+    return {
+      buttonClicked,
+    };
+  },
 });
-
-const buttons = [
-  {
-    text: 'Condiciones',
-    route: '/condiciones' // Ruta de redireccionamiento para el botón Condiciones
-  },
-  {
-    text: 'Actos',
-    route: '/actos' // Ruta de redireccionamiento para el botón Actos
-  },
-  {
-    text: 'Recursos',
-    route: '/recursos' // Ruta de redireccionamiento para el botón Recursos
-  }
-];
-
-const router = useRouter();
-
-const buttonClicked = (index: number) => {
-  const button = buttons[index];
-  console.log(`Botón ${index + 1} hizo clic`);
-  router.push(button.route); // Redireccionar a la ruta correspondiente al botón
-};
 </script>
 
 

@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button default-href="/search"></ion-back-button>
       </ion-buttons>
-      <ion-title style="color: orange">Formulario nueva cartilla</ion-title>
+      <ion-title style="color: white">Nueva cartilla</ion-title>
     </ion-toolbar>
   </ion-header>
 </template>

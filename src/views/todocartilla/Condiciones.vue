@@ -1,13 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          CONDICIONES
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
+    <HeaderLayout />
     <ion-content class="ion-padding">
       <ion-grid>
         <ion-row v-for="(button, index) in buttons" :key="button.id">
@@ -26,9 +19,9 @@
 </template>
 
 <script lang="ts">
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar, IonToggle, IonLabel } from '@ionic/vue';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar, IonToggle, IonLabel, IonItem,} from '@ionic/vue';
 import { defineComponent } from 'vue';
-
+import HeaderLayout from "../todocartilla/HeaderCondi.vue";
 export default defineComponent({
   name: 'Home',
   components: {
@@ -43,6 +36,7 @@ export default defineComponent({
     IonToolbar,
     IonToggle,
     IonLabel,
+    HeaderLayout,
   },
   data() {
     return {
